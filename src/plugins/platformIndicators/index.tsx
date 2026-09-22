@@ -164,7 +164,7 @@ function getBadges({ userId }: BadgeUserArgs): ProfileBadge[] {
 
     if (!status) return [];
 
-    return Object.entries(status).map(([platform, status]) => ({
+    return Object.entries(status).filter(([_, status]) => status === "online").map(([platform, status]) => ({
         key: `vc-platform-indicator-${platform}`,
         id: `vc-platform-indicator-${platform}`,
         component: () => (
@@ -180,7 +180,7 @@ function getBadges({ userId }: BadgeUserArgs): ProfileBadge[] {
 }
 
 function PlatformIndicators({ statusMap, small }: { statusMap: ClientStatusMap; small: boolean; }) {
-    const icons = Object.entries(statusMap).map(([platform, status]) => (
+    const icons = Object.entries(statusMap).filter(([_, status]) => status === "online").map(([platform, status]) => (
         <PlatformIcon
             key={platform}
             platform={platform as DiscordPlatform}
